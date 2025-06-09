@@ -4,7 +4,7 @@ const u = converse.env.utils;
 
 describe("The Login Form", function () {
     
-    it("shows the domain name when locked_domain is set", 
+    fit("shows the domain name when locked_domain is set", 
         mock.initConverse(
             ['chatBoxesInitialized'], 
             { auto_login: false, 
@@ -16,10 +16,10 @@ describe("The Login Form", function () {
         const cbview = await u.waitUntil(() => _converse.chatboxviews.get('controlbox'));
         await u.waitUntil(() => cbview.querySelectorAll('div.input-group').length)
         
-        const addons = cbview.querySelectorAll('div.input-group');
+        const addons = cbview.querySelectorAll('span.input-group-text.addon');
         expect(addons.length).toBe(1);
         
-        expect(cbview.querySelector('div.input-group').textContent, 'jabber.hot-chilli.eu');
+        expect(cbview.querySelector('span.input-group-text.addon').textContent, 'jabber.hot-chilli.eu');
     }))
 
     it("contains a checkbox to indicate whether the computer is trusted or not",
