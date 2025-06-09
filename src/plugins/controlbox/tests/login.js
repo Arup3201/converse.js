@@ -4,7 +4,7 @@ const u = converse.env.utils;
 
 describe("The Login Form", function () {
     
-    fit("shows the domain name when locked_domain is set", 
+    it("shows the domain name when locked_domain is set", 
         mock.initConverse(
             ['chatBoxesInitialized'], 
             { auto_login: false, 
