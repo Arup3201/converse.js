@@ -88,7 +88,7 @@ function tplAuthFields() {
     return html`
         <div class="mb-3">
             <label for="converse-login-jid" class="form-label">${i18n_xmpp_address}:</label>
-            <div class="input-group">
+            <div class="${locked_domain ? 'input-group' : ''}">
                 <input
                     id="converse-login-jid"
                     ?autofocus=${api.settings.get('auto_focus') ? true : false}

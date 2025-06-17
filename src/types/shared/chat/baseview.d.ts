@@ -3,10 +3,15 @@ export default class BaseChatView extends CustomElement {
         jid: {
             type: StringConstructor;
         };
+        model: {
+            state: boolean;
+        };
     };
     jid: any;
     model: any;
-    updated(): void;
+    viewportMediaQuery: MediaQueryList;
+    renderOnViewportChange: () => void;
+    connectedCallback(): void;
     /**
      * @param {MouseEvent} ev
      */
@@ -25,6 +30,5 @@ export default class BaseChatView extends CustomElement {
     scrollDown(ev?: Event): void;
     onWindowStateChanged(): void;
 }
-export type Model = import("@converse/skeletor").Model;
 import { CustomElement } from '../components/element.js';
 //# sourceMappingURL=baseview.d.ts.map

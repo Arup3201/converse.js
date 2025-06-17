@@ -1,8 +1,6 @@
-/**
- * @typedef {import('@converse/skeletor').Model} Model
- */
-import { CustomElement } from '../components/element.js';
 import { _converse, api, constants } from '@converse/headless';
+import { CustomElement } from '../components/element.js';
+import { MOBILE_CUTOFF } from 'shared/constants.js';
 import { onScrolledDown } from './utils.js';
 
 const { CHATROOMS_TYPE, INACTIVE } = constants;
@@ -11,26 +9,38 @@ export default class BaseChatView extends CustomElement {
     static get properties() {
         return {
             jid: { type: String },
+            model: { state: true },
         };
     }
 
     constructor() {
         super();
         this.jid = /** @type {string} */ null;
-        this.model = /** @type {Model} */ null;
+        this.model = /** @type {import('@converse/skeletor').Model} */ null;
+        this.viewportMediaQuery = window.matchMedia(`(max-width: ${MOBILE_CUTOFF}px)`);
+        this.renderOnViewportChange = () => this.requestUpdate();
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.viewportMediaQuery.addEventListener('change', this.renderOnViewportChange);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         _converse.state.chatboxviews.remove(this.jid, this);
+        this.viewportMediaQuery.removeEventListener('change', this.renderOnViewportChange);
     }
 
-    updated() {
-        if (this.model && this.jid !== this.model.get('jid')) {
+    /**
+     * Called when the element's properties change.
+     * @param {import('lit').PropertyValues} changed
+     */
+    updated(changed) {
+        super.updated(changed);
+        if (changed.has('jid') && this.model && this.jid !== this.model.get('jid')) {
             this.stopListening();
             _converse.state.chatboxviews.remove(this.model.get('jid'), this);
-            delete this.model;
-            this.requestUpdate();
             this.initialize();
         }
     }

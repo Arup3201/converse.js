@@ -8,10 +8,6 @@ export function unregisterGlobalEventHandlers(): void;
  */
 export function dragresizeOverIframeHandler(e: Element): void;
 /**
- * @param {import('@converse/headless/types/shared/chatbox').default} model
- */
-export function initializeDragResize(model: import("@converse/headless/types/shared/chatbox").default): void;
-/**
  * @returns {string}
  */
 export function getResizingDirection(): string;
@@ -46,6 +42,11 @@ export function onMouseMove(ev: MouseEvent): boolean;
  * @param {MouseEvent} ev
  */
 export function onMouseUp(ev: MouseEvent): boolean;
+/**
+ * @param {import('@converse/headless/types/shared/chatbox').default} chatbox
+ * @param {boolean} should_destroy
+ */
+export function shouldDestroyOnClose(chatbox: import("@converse/headless/types/shared/chatbox").default, should_destroy: boolean): boolean;
 export type ResizingData = {
     chatbox: HTMLElement;
     direction: string;
